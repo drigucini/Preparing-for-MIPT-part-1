@@ -66,7 +66,7 @@ public class Main {
 
         if (A > B && B > C) {
             System.out.println(C + ", " + B + ", " + A);
-        } else if (A > B && B < C) {
+        } else if (A > B && A < C) {
             System.out.println(B + ", " + C + ", " + A);
         } else if (B > A && A > C) {
             System.out.println(C + ", " + A + ", " + B);
@@ -217,25 +217,29 @@ public class Main {
     public static void task7() {
         System.out.println("\nTask 7");
         Scanner scanner = new Scanner(System.in);
-        var number = scanner.nextDouble();
-        System.out.println(check(number));
+        double number = scanner.nextDouble();
+        if (check(number) || check((int) number)) {
+            System.out.println(true);
+        } else {
+            System.out.println(false);
+        }
     }
 
     private static boolean check(double number) {
-        double a = number/100;
-        double b = number/1000;
-        double c = number/10000;
+        int a = (int) number*10%10;
+        int b = (int) number*100%10;
+        int c = (int)number*1000%10;
         if (a == 0 || b == 0 || c == 0) {
             return true;
         }
         return false;
     }
     private static boolean check(int number) {
-        if (number / 100 != 0 && number / 1000 == 0) { //a
+        if (number >= 100 && number < 1000) { //a
             int a = number/100;
             int b = number/10%10;
             int c = number%10;
-            if (number * number == a*a*a + b*b*b + c*c*c) {
+            if (number * number == (int) Math.pow((a + b + c), 3)) {
                 return true;
             }
             if (a == b || a == c || b == c) { //c
@@ -243,15 +247,13 @@ public class Main {
             }
         }
 
-        if (number / 1000 != 0 && number / 10000 == 0) { //b
+        if (number >= 1000 && number < 10_000) { //b
             int a = number/1000;
             int b = number/100%10;
             int c = number/10%10;
             int d = number%10;
             return a + b == c + d;
         }
-
-
         return false;
     }
 }
